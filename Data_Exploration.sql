@@ -103,3 +103,17 @@ and Dea.date = Vac.date
 where dea.continent is not null
 
 Select * from PercentVaccinated
+
+Create View CountryWiseDeathCount as
+select location, Max(cast(total_deaths as bigint)) as TotalDeathCount from portfolioproject..CovidDeaths
+Where continent is not NULL Group by Location
+
+Select * from CountryWiseDeathCount
+
+
+Create View CountryWiseInfectionRate as
+select location, population, Max(total_cases) as HighestInfectionCount, Max((total_cases/population)*100) as PercentPopulationInfected 
+from portfolioproject..CovidDeaths
+Group by Location, Population
+
+Select * from CountryWiseInfectionRate
